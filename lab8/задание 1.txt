@@ -1,0 +1,14 @@
+import React, { useState, useEffect } from 'react';
+
+const ReverseTimer = () => {
+  const [count, setCount] = useState(10);
+
+  useEffect(() => {
+    const timer = count > 0 && setInterval(() => setCount(count - 1), 1000);
+    return () => clearInterval(timer);
+  }, [count]);
+
+  return <div>{count}</div>;
+};
+
+export default ReverseTimer;

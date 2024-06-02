@@ -1,0 +1,42 @@
+import React, { useState, useEffect } from 'react';
+
+const PrimeNumberGenerator = () => {
+  const [primeNumbers, setPrimeNumbers] = useState([2, 3]); // Начальные простые числа 2 и 3
+  let currentNumber = 3;
+
+  useEffect(() => {
+    const isPrime = (num) => {
+      for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    const generateNextPrimeNumber = () => {
+      currentNumber += 2;
+      while (!isPrime(currentNumber)) {
+        currentNumber += 2;
+      }
+      setPrimeNumbers((prevNumbers) => [...prevNumbers, currentNumber]);
+    };
+
+    const interval = setInterval(generateNextPrimeNumber, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div>
+      <h1>Простые числа:</h1>
+      <ul>
+        {primeNumbers.map((number, index) => (
+          <li key={index}>{number}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default PrimeNumberGenerator;
